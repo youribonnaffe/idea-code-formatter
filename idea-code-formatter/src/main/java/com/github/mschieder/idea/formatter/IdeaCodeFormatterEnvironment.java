@@ -1,6 +1,6 @@
 package com.github.mschieder.idea.formatter;
 
-import com.google.common.base.Stopwatch;
+//import com.google.common.base.Stopwatch;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,6 +86,7 @@ public class IdeaCodeFormatterEnvironment implements AutoCloseable {
         } else {
             // add the current classpath (for unit testing)
             classpath = System.getProperty("java.class.path");
+//            classpath = System.getProperty("java.class.path") + ":/Users/lucile/youri/format/idea-code-formatter/downloaded_ides/ideaIC-2025.1.1.win/lib/modules/*";
         }
 
         List<String> command = new ArrayList<>();
@@ -94,13 +95,20 @@ public class IdeaCodeFormatterEnvironment implements AutoCloseable {
         command.add(classpath);
 
         command.add("-Didea.home.path=" + ideHome);
-        command.add("-Djava.system.class.loader=com.intellij.util.lang.PathClassLoader");
+//        command.add("-Djava.system.class.loader=com.intellij.util.lang.PathClassLoader");
         command.add("-Didea.vendor.name=JetBrains");
-        command.add("-Didea.paths.selector=IdeaIC2023.1");
+        command.add("-Didea.paths.selector=IdeaIC2025.1.1");
         command.add("-Djna.nosys=true");
         command.add("-Djna.noclasspath=true");
         command.add("-Didea.platform.prefix=Idea");
         command.add("-Dsplash=false");
+//        command.add("-DdisableNonBundledPlugins");
+        command.add("-Djava.awt.headless=true");
+//        command.add("-Didea.log.debug.categories=#com.intellij.ide.plugins.PluginManager,#com.intellij");
+//        command.add("-Didea.debug.mode=true");
+//        command.add("-Dlog4j2.debug=true");
+//        command.add("-Dlogger.org=TRACE");
+//        command.add("-Didea.is.internal=true");
 
 
         command.add("--add-opens=java.base/java.io=ALL-UNNAMED");
@@ -136,6 +144,7 @@ public class IdeaCodeFormatterEnvironment implements AutoCloseable {
         command.add("--add-opens=java.desktop/sun.font=ALL-UNNAMED");
         command.add("--add-opens=java.desktop/sun.java2d=ALL-UNNAMED");
         command.add("--add-opens=java.desktop/sun.swing=ALL-UNNAMED");
+        command.add("--add-opens=java.desktop/com.apple.laf=ALL-UNNAMED");
         command.add("--add-opens=jdk.attach/sun.tools.attach=ALL-UNNAMED");
         command.add("--add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED");
         command.add("--add-opens=jdk.internal.jvmstat/sun.jvmstat.monitor=ALL-UNNAMED");
@@ -143,6 +152,7 @@ public class IdeaCodeFormatterEnvironment implements AutoCloseable {
 
 
         command.add("com.intellij.idea.Main");
+//        command.add("disableNonBundledPlugins");
         command.add("format");
         command.addAll(Arrays.asList(args));
 
@@ -150,19 +160,19 @@ public class IdeaCodeFormatterEnvironment implements AutoCloseable {
         builder.environment().put("APPDATA", appdata);
         builder.environment().put("LOCALAPPDATA", localAppdata);
 
-        Stopwatch sw = Stopwatch.createStarted();
+//        Stopwatch sw = Stopwatch.createStarted();
         Process process = builder
-                //       .inheritIO()
-                .redirectInput(ProcessBuilder.Redirect.INHERIT)
-                .redirectOutput(ProcessBuilder.Redirect.PIPE)
-                .redirectError(ProcessBuilder.Redirect.to(formatterRoot.resolve("error.log").toFile()))
+                       .inheritIO()
+//                .redirectInput(ProcessBuilder.Redirect.INHERIT)
+//                .redirectOutput(ProcessBuilder.Redirect.PIPE)
+//                .redirectError(ProcessBuilder.Redirect.to(formatterRoot.resolve("error.log").toFile()))
                 .start();
 
         outputLines.addAll(IOUtils.readLines(process.getInputStream()));
 
         process.waitFor();
-        sw.stop();
-        log.info("process finished after {} ms", sw.elapsed().toMillis());
+//        sw.stop();
+//        log.info("process finished after {} ms", sw.elapsed().toMillis());
         return process.exitValue();
     }
 }

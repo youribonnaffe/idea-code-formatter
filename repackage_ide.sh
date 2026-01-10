@@ -19,21 +19,23 @@ if test -f "$DOWNLOAD_DIR/$DOWNLOAD_FILE"; then
     cp $DOWNLOAD_DIR/$DOWNLOAD_FILE $DOWNLOAD_FILE
 else
      mkdir $DOWNLOAD_DIR
-     wget --progress=bar:force:noscroll https://download-cdn.jetbrains.com/idea/$DOWNLOAD_FILE
+     wget --progress=bar:force:noscroll https://download.jetbrains.com/idea/$DOWNLOAD_FILE
      cp $DOWNLOAD_FILE $DOWNLOAD_DIR/$DOWNLOAD_FILE
 fi
 
 
 echo unzipping required files
 unzip -o $DOWNLOAD_FILE "plugins/java/lib/*" -d ide
+unzip -o $DOWNLOAD_FILE "plugins/json/lib/*" -d ide
 unzip -o $DOWNLOAD_FILE "plugins/java-ide-customization/lib/*" -d ide
 
 echo repackaging ide
-mkdir -p repackaged
-zip -r $DEST_ZIP ide
+ mkdir -p repackaged
+ zip -r $DEST_ZIP ide
 
 unzip -o $DOWNLOAD_FILE "lib/3rd-party-rt.jar" -d ide
 unzip -o $DOWNLOAD_FILE "lib/app.jar" -d ide
+unzip -o $DOWNLOAD_FILE "lib/app-client.jar" -d ide
 unzip -o $DOWNLOAD_FILE "lib/external-system-rt.jar" -d ide
 unzip -o $DOWNLOAD_FILE "lib/forms_rt.jar" -d ide
 unzip -o $DOWNLOAD_FILE "lib/groovy.jar" -d ide
@@ -44,7 +46,11 @@ unzip -o $DOWNLOAD_FILE "lib/stats.jar" -d ide
 unzip -o $DOWNLOAD_FILE "lib/util.jar" -d ide
 unzip -o $DOWNLOAD_FILE "lib/util_rt.jar" -d ide
 unzip -o $DOWNLOAD_FILE "lib/util-8.jar" -d ide
+unzip -o $DOWNLOAD_FILE "lib/platform-loader.jar" -d ide
+unzip -o $DOWNLOAD_FILE "lib/lib-client.jar" -d ide
+unzip -o $DOWNLOAD_FILE "lib/opentelemetry.jar" -d ide
+unzip -o $DOWNLOAD_FILE "lib/modules/*" -d ide
 
 echo do the cleanup
-rm $DOWNLOAD_FILE
+#rm $DOWNLOAD_FILE
 cd ..

@@ -1,6 +1,6 @@
 package com.github.mschieder.idea.formatter;
 
-import com.google.common.base.Stopwatch;
+//import com.google.common.base.Stopwatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,15 +25,15 @@ class Utils {
     }
 
     public static void unzipZippedFileFromResource(InputStream is, File outputDir) throws IOException {
-        Stopwatch stopwatch = Stopwatch.createStarted();
+//        Stopwatch stopwatch = Stopwatch.createStarted();
         File zippedFile = new File(outputDir, "ide.zip");
         try (OutputStream os = new BufferedOutputStream(new FileOutputStream(zippedFile))) {
             is.transferTo(os);
         }
         unzipFromFile(zippedFile, outputDir);
 
-        stopwatch.stop();
-        log.info("unzipped in {} ms", stopwatch.elapsed().toMillis());
+//        stopwatch.stop();
+//        log.info("unzipped in {} ms", stopwatch.elapsed().toMillis());
     }
 
     public static void unzipFromFile(File zippedFile, File outputDir) throws IOException {
@@ -56,7 +56,7 @@ class Utils {
     }
 
     public static void unzipFromStream(InputStream is, File outputDir) throws IOException {
-        Stopwatch stopwatch = Stopwatch.createStarted();
+//        Stopwatch stopwatch = Stopwatch.createStarted();
         try (ZipInputStream zipInputstream = new ZipInputStream(new BufferedInputStream(is))) {
             ZipEntry entry;
             while ((entry = zipInputstream.getNextEntry()) != null) {
@@ -71,8 +71,8 @@ class Utils {
                 }
             }
         }
-        stopwatch.stop();
-        log.info("unzipped in {] ms", stopwatch.elapsed().toMillis());
+//        stopwatch.stop();
+//        log.info("unzipped in {] ms", stopwatch.elapsed().toMillis());
     }
 
     private static void copy(final InputStream source, final OutputStream target) throws IOException {

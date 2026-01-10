@@ -91,8 +91,17 @@
                     <include>com/intellij/concurrency/**/*.*</include>
                     <include>com/intellij/analysis/**/*.*</include>
                     <include>com/intellij/platform/**/*.*</include>
+                    <include>com/intellij/l10n/**/*.*</include>
+                    <include>com/intellij/find/**/*.*</include>
+                    <include>com/intellij/**/*.*</include>
+                    <include>intellij*</include>
+                    <include>fleet/**/*.*</include>
+                    <include>org/h2/**/*.*</include>
+                    <include>_COROUTINE/**/*.*</include>
+                    <include>com/jetbrains/**/*.*</include>
 
 
+                    <include>com/jetbrains/rhizomedb/**/*.*</include>
                     <include>com/jetbrains/infra/**/*.*</include>
                     <include>com/google/common/**/*.*</include>
                     <include>com/google/protobuf/**/*.*</include>
